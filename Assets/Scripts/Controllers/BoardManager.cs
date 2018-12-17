@@ -33,8 +33,8 @@ public class BoardManager: MonoBehaviour {
     //-------- Updates -------------
     private void Update() {
         if (input.leftMouse) {
-            targetSpace = GetSpaceFromCameraRay(Input.mousePosition);
-            GeneratePathToPosition((int)targetSpace.position.x,(int) targetSpace.position.y);
+            //targetSpace = GetSpaceFromCameraRay(Input.mousePosition);
+            //GeneratePathToPosition((int)targetSpace.position.x,(int) targetSpace.position.y);
 
         }
     }
@@ -81,7 +81,7 @@ public class BoardManager: MonoBehaviour {
 
     public void UnHighlightAllPieces() {
         foreach(Spaces s in spacePositions) {
-            s.isHighlighted = false;
+            s.ResetSpaces();
         }
     }
     /*
@@ -157,24 +157,42 @@ public class BoardManager: MonoBehaviour {
         movePath.Reverse();
         movePath.RemoveAt(0);
         selectedUnit.path = movePath;
-        Debug.Log("Move Path:Length "+movePath.Count);
+        // Clean up
+        dist.Clear();
+        prev.Clear();
+        unvisited.Clear();
     }
 
-    public Spaces GetSpaceAtLocation(Vector3 pos) {
-        Debug.Log("No Space Detected");
+    public Spaces GetSpaceAtLocation(Vector2 pos) {
+        if (pos.x > -1 & pos.x < mapSize.x & pos.y > -1 & pos.y < mapSize.y) {
+            return spacePositions[(int)pos.x, (int)pos.y];
+        }
+        Debug.LogWarning("No Space Detected at:" + pos);
         return null;
+        
     }
 
     public Spaces GetSpaceFromCameraRay(Vector3 pos) {
 
+        UnHighlightAllPieces();
         RaycastHit hitinfo;
         Ray ray = Camera.main.ScreenPointToRay(pos);
-        if (Physics.Raycast(ray, out hitinfo, 10000f, spacesLayer)) {
-            hitinfo.transform.gameObject.GetComponent<Spaces>().isHighlighted = true;
+
+        if (Physics.Raycast(ray, out hitinfo, Mathf.Infinity, spacesLayer)) {
+            Debug.DrawRay(pos, hitinfo.point);
+            hitinfo.transform.gameObject.GetComponent<Spaces>().SetSpaceClickable();
             return hitinfo.transform.gameObject.GetComponent<Spaces>();
         } else {
             Debug.Log("No space captured");
+
         }
         return null;
+    }
+
+    public bool CheckForValidSpace(Vector2 pos) {
+        if (pos.x > -1 & pos.x < mapSize.x & pos.y > -1 & pos.y < mapSize.y) {
+            return true;
+        }
+        return false;
     }
 }

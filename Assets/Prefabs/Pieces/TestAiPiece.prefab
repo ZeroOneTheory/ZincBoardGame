@@ -19,7 +19,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4386748965102642}
-  - component: {fileID: 114710382693159582}
+  - component: {fileID: 135639788959002546}
+  - component: {fileID: 114698062089876640}
   m_Layer: 0
   m_Name: TestAiPiece
   m_TagString: Untagged
@@ -37,7 +38,6 @@ GameObject:
   - component: {fileID: 4192296948989358}
   - component: {fileID: 33972137948301774}
   - component: {fileID: 23576464563207658}
-  - component: {fileID: 135141215726871946}
   m_Layer: 0
   m_Name: Sphere
   m_TagString: Untagged
@@ -64,8 +64,8 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1034414696259982}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3, y: 0, z: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 9, y: 0, z: 3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4192296948989358}
@@ -114,7 +114,7 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1786800879295460}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &114710382693159582
+--- !u!114 &114698062089876640
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -125,22 +125,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04a568f21010942479db356efd5ec6ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveCount: 2
+  moveCount: 0
   isActive: 0
+  moveSpeed: 1
   piece: {fileID: 11400000, guid: ea13b11725203784e8f68e2a14341b30, type: 2}
   currentPosition: {x: 0, y: 0}
   currentSpace: {fileID: 0}
+  goalSpace: {fileID: 0}
   path: []
+  reachable: []
   board: {fileID: 0}
-  matchController: {fileID: 0}
---- !u!135 &135141215726871946
+  mControl: {fileID: 0}
+--- !u!135 &135639788959002546
 SphereCollider:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1786800879295460}
+  m_GameObject: {fileID: 1034414696259982}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5

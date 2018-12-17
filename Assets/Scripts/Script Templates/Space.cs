@@ -9,6 +9,7 @@ public class Space : ScriptableObject {
     public GameObject tilePrefab;
     public Material baseMaterial;
     public Material highlightedMaterial;
+    public Material clickableMaterial;
     public int tileCost;
 
     

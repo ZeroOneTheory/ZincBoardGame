@@ -15,4 +15,5 @@ MonoBehaviour:
   tilePrefab: {fileID: 1830865594870584, guid: c0795d83af2cb1e4fa6773d4671cebe8, type: 2}
   baseMaterial: {fileID: 2100000, guid: a2a104c9b52252049b2ec82d15377694, type: 2}
   highlightedMaterial: {fileID: 2100000, guid: 6f228656cfdac584c87a954eb7d9ca88, type: 2}
+  clickableMaterial: {fileID: 2100000, guid: f63c8b8521b51e14d9bd4c3c9fc9daa4, type: 2}
   tileCost: 1

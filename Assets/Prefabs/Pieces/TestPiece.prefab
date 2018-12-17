@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4386748965102642}
   - component: {fileID: 114138035571670914}
   - component: {fileID: 135639788959002546}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: TestPiece
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -65,7 +65,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1034414696259982}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6, y: 0, z: 3}
+  m_LocalPosition: {x: 9, y: 0, z: 3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4192296948989358}
@@ -127,11 +127,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveCount: 3
   isActive: 0
+  moveSpeed: 1.5
   piece: {fileID: 11400000, guid: ef4e12a7bee581748a8770bd5024cece, type: 2}
   currentPosition: {x: 0, y: 0}
   currentSpace: {fileID: 0}
+  goalSpace: {fileID: 0}
   path: []
+  reachable: []
   board: {fileID: 0}
+  mControl: {fileID: 0}
+  moveIndex: 0
 --- !u!135 &135639788959002546
 SphereCollider:
   m_ObjectHideFlags: 1
@@ -139,7 +144,7 @@ SphereCollider:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1034414696259982}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5

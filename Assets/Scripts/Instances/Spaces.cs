@@ -21,29 +21,34 @@ public class Spaces : MonoBehaviour {
         meshRenderer = GetComponentInChildren<MeshRenderer>();
     }
 
-    private void Update() {
-        UpdateMaterials();
+
+
+
+    public void HighlighSpace() {
+        isHighlighted = true;
+        if (meshRenderer.material != space.highlightedMaterial) {
+            meshRenderer.material = space.highlightedMaterial;
+        }
     }
 
+    public void SetSpaceClickable() {
+        isClickable = true;
+        if (meshRenderer.material != space.clickableMaterial) {
+            meshRenderer.material = space.clickableMaterial;
+        }
+    }
 
-    private void UpdateMaterials() {
-        if (isHighlighted) {
-            if (meshRenderer.material != space.highlightedMaterial) {
-                meshRenderer.material = space.highlightedMaterial;
-            }
-        }
-        else {
-            if (meshRenderer.material != space.baseMaterial) {
-                meshRenderer.material = space.baseMaterial;
-            }
-        }
+    public void ResetSpaces() {
+        isClickable = false;
+        isHighlighted = false;
+        meshRenderer.material = space.baseMaterial;
     }
 
     public float DistanceToSpace(Spaces s) {
         return Vector2.Distance(position, s.position);
     }
     public Vector3 GetPositionInWorldCoord() {
-        return new Vector3(position.x, 0, position.y);
+        return new Vector3(position.x, .5f, position.y);
     }
 
 }
