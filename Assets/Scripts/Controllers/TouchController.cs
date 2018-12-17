@@ -11,13 +11,13 @@ public class TouchController : MonoBehaviour {
     public bool isDragging = false;
 
     private void Update() {
-        if (Input.touchCount > 1) {
+        if (Input.touchCount > 0) {
              
-            if (Input.touches[1].phase == TouchPhase.Began) {
+            if (Input.touches[0].phase == TouchPhase.Began) {
                 isDragging = true;
-                startTouchPoint = Input.touches[1].position;
+                startTouchPoint = Input.touches[0].position;
             }
-            else if (Input.touches[1].phase == TouchPhase.Ended || Input.touches[1].phase == TouchPhase.Canceled) {
+            else if (Input.touches[0].phase == TouchPhase.Ended || Input.touches[0].phase == TouchPhase.Canceled) {
                 ResetTouches();
             }
         }
@@ -26,7 +26,7 @@ public class TouchController : MonoBehaviour {
         swipeDelta = Vector2.zero;
         if (isDragging) {
             if (Input.touchCount > 0) {
-                swipeDelta = Input.touches[1].position - startTouchPoint;
+                swipeDelta = Input.touches[0].position - startTouchPoint;
             }
         } 
 

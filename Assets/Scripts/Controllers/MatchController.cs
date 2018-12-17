@@ -12,6 +12,7 @@ using UnityEngine;
         public List<Teams> teams = new List<Teams>();
         public int turnIndex = 0;
         public int teamCount;
+        public int selePieceIndex = 0;
 
         public Teams currentTeamsTurn;
         public Teams nextTeamsTurn;
@@ -26,7 +27,7 @@ using UnityEngine;
             board = GameManager.Instance.BoardManager;
             
         }
-        public void Start() {
+    public void Start() {
 
             if (teams.Count > 0) {
                 teamCount = teams.Count;
@@ -41,7 +42,8 @@ using UnityEngine;
         }
 
 
-        private void Update() {
+    private void Update() {
+
             if (teams.Count > 0) {
                 if (currentTeamsTurn.turnState == TurnState.WaitingToStart) {
                     if (currentTeamsTurn.team.teamType == TeamType.PlayerControlled) {
@@ -55,7 +57,8 @@ using UnityEngine;
                 }
 
                 if (currentTeamsTurn.turnState == TurnState.TurnEnded) {
-                    currentTeamsTurn = nextTeamsTurn;
+                currentTeamsTurn = nextTeamsTurn;
+
                     if (turnIndex == teamCount-1) {
                         turnIndex = 0;
                         nextTeamsTurn = teams[1];
@@ -68,21 +71,43 @@ using UnityEngine;
                     
                 }
             }
-        if(currentTeamsTurn.teamMoveCount==0 && currentTeamsTurn.turnState != TurnState.TurnEnded) {
-            selectedPiece = null;
-            board.selectedUnit = null;
-            currentTeamsTurn.turnState = TurnState.TurnEnded;
-        }
 
         if (playerTeamEnabled) {
 
-            if (Input.touchCount > 1) {
-                PlayerPieces detPiece = GetPieceAtTouchPoint();
-                if (detPiece != null) {
-                    selectedPiece = detPiece;
-                    board.selectedUnit = selectedPiece;
+                if (Input.touchCount > 0) {
+                    PlayerPieces detPiece = GetPieceAtTouchPoint();
+                    if (detPiece != null) {
+                        selectedPiece = detPiece;
+                        board.selectedUnit = selectedPiece;
+                    }
                 }
+
+            if (currentTeamsTurn.teamMoveCount == 0 && currentTeamsTurn.turnState != TurnState.TurnEnded) {
+                selectedPiece = null;
+                board.selectedUnit = null;
+                currentTeamsTurn.turnState = TurnState.TurnEnded;
+                currentTeamsTurn.teamMoveCount = currentTeamsTurn.team.movesPerTurn;
             }
+
+        }
+
+        if (aiTeamEnabled) {
+            if (currentTeamsTurn.teamMoveCount == 0) {
+                if (selePieceIndex < currentTeamsTurn.pieces.Count - 1) {
+                    selePieceIndex += 1;
+                    selectedPiece = currentTeamsTurn.pieces[selePieceIndex];
+                    currentTeamsTurn.teamMoveCount = selectedPiece.piece.defaultMoveRange;
+                } 
+            }
+
+            if (currentTeamsTurn.teamMoveCount == 0 && currentTeamsTurn.turnState != TurnState.TurnEnded && selePieceIndex==currentTeamsTurn.pieces.Count-1) {
+                selectedPiece = null;
+                board.selectedUnit = null;
+                currentTeamsTurn.turnState = TurnState.TurnEnded;
+                currentTeamsTurn.teamMoveCount = currentTeamsTurn.team.movesPerTurn;
+                selePieceIndex = 0;
+            }
+
 
         }
             
@@ -96,15 +121,17 @@ using UnityEngine;
         aiTeamEnabled = false;
     }
 
-        public void EnableAiControlledTeam(Teams team) {
+    public void EnableAiControlledTeam(Teams team) {
             //Start the Ai controlled team IEnumerator event
             Debug.Log(team.team.teamName + " Team Up!");
-        playerTeamEnabled = false;
-        aiTeamEnabled = true;
+            playerTeamEnabled = false;
+            aiTeamEnabled = true;
+            selectedPiece = currentTeamsTurn.pieces[selePieceIndex];
+            currentTeamsTurn.teamMoveCount = selectedPiece.piece.defaultMoveRange;
     }
 
     public PlayerPieces GetPieceAtTouchPoint() {
-        Ray ray = Camera.main.ScreenPointToRay(Input.GetTouch(1).position);
+        Ray ray = Camera.main.ScreenPointToRay(Input.GetTouch(0).position);
         RaycastHit hitinfo;
         if(Physics.Raycast(ray,out hitinfo, 1000f, piecesLayer)) {
             return hitinfo.transform.gameObject.GetComponent<PlayerPieces>();

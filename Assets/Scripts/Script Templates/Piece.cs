@@ -8,4 +8,6 @@ public class Piece : ScriptableObject {
     public string pieceName;
     public int defaultMoveRange;
     public bool allowDiagnols;
+
+
 }

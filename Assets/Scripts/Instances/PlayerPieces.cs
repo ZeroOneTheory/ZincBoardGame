@@ -42,7 +42,7 @@ public class PlayerPieces : Pieces {
                     }
                 }
             }
-        }
+        } else {moveIndex = 0;}
 
             if (path != null) {
                 DrawPathDebug();

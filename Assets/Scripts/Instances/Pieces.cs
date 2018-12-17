@@ -55,7 +55,7 @@ public class Pieces : MonoBehaviour {
     }
 
     public void GetReachableSpaces() {
-        int count = moveCount;
+        int count = 1;
         reachable.Clear();
         foreach (Spaces s in currentSpace.edges) {
             reachable.Add(s);
