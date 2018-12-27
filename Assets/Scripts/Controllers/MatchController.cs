@@ -2,30 +2,30 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
-    public class MatchController : MonoBehaviour {
-
-
-        private BoardManager board;
+public class MatchController : MonoBehaviour {
 
 
-        public List<Teams> teams = new List<Teams>();
-        public int turnIndex = 0;
-        public int teamCount;
-        public int selePieceIndex = 0;
+    private BoardManager board;
+    private TouchController tInput;
 
-        public Teams currentTeamsTurn;
-        public Teams nextTeamsTurn;
 
-         public bool playerTeamEnabled = false;
-         public bool aiTeamEnabled = false;
+    public List<Teams> teams = new List<Teams>();
+    public int turnIndex = 0;
+    public int teamCount;
+    public int selePieceIndex = 0;
 
-        public Pieces selectedPiece;
-        private int piecesLayer = 1 << 10; // Set to Player Pieces Layer
+    public Teams currentTeamsTurn;
+    public Teams nextTeamsTurn;
+
+    public bool playerTeamEnabled = false;
+    public bool aiTeamEnabled = false;
+
+    public Pieces selectedPiece;
+    private int piecesLayer = 1 << 10; // Set to Player Pieces Layer
 
     private void Awake() {
-            board = GameManager.Instance.BoardManager;
-            
+        board = GameManager.Instance.BoardManager;
+        tInput = GameManager.Instance.TouchController;
         }
     public void Start() {
 
@@ -44,7 +44,7 @@ using UnityEngine;
 
     private void Update() {
 
-            if (teams.Count > 0) {
+        if (teams.Count > 0) {
                 if (currentTeamsTurn.turnState == TurnState.WaitingToStart) {
                     if (currentTeamsTurn.team.teamType == TeamType.PlayerControlled) {
                         EnablePlayerControlledTeam(currentTeamsTurn);
@@ -74,7 +74,7 @@ using UnityEngine;
 
         if (playerTeamEnabled) {
 
-                if (Input.touchCount > 0) {
+                if (Input.touchCount > 0 && tInput.startTouchPoint==Vector2.zero) {
                     PlayerPieces detPiece = GetPieceAtTouchPoint();
                     if (detPiece != null) {
                         selectedPiece = detPiece;

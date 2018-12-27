@@ -34,8 +34,8 @@ public class Pieces : MonoBehaviour {
     public Spaces GetCurrentSpace() {
         SetValidCurrentPosition(transform.position);
 
-        if (board != null & board.spacePositions[(int)currentPosition.x, (int)currentPosition.y] != null) {
-            return board.spacePositions[(int)currentPosition.x, (int)currentPosition.y];
+        if (board != null & board.spacesGrid[(int)currentPosition.x, (int)currentPosition.y] != null) {
+            return board.spacesGrid[(int)currentPosition.x, (int)currentPosition.y];
         }
         else {
             Debug.LogWarning("Board var has null value");

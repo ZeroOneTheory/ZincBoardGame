@@ -7,6 +7,7 @@ public class Spaces : MonoBehaviour {
 
     public Space space;
     public List<Spaces> edges = new List<Spaces>();
+    public List<Spaces> diaEdges = new List<Spaces>();
     public Vector2 position;
     public bool isTraversable = true;
     public bool isHighlighted = false;
@@ -47,6 +48,7 @@ public class Spaces : MonoBehaviour {
     public float DistanceToSpace(Spaces s) {
         return Vector2.Distance(position, s.position);
     }
+
     public Vector3 GetPositionInWorldCoord() {
         return new Vector3(position.x, .5f, position.y);
     }

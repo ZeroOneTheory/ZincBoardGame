@@ -128,7 +128,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveCount: 3
   isActive: 0
-  moveSpeed: 1.5
+  moveSpeed: 5
   piece: {fileID: 11400000, guid: ef4e12a7bee581748a8770bd5024cece, type: 2}
   currentPosition: {x: 0, y: 0}
   currentSpace: {fileID: 0}
@@ -138,6 +138,7 @@ MonoBehaviour:
   board: {fileID: 0}
   mControl: {fileID: 0}
   moveIndex: 0
+  arrowTelegraph: {fileID: 0}
 --- !u!135 &135639788959002546
 SphereCollider:
   m_ObjectHideFlags: 1

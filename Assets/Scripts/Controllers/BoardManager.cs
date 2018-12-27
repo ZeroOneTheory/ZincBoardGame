@@ -9,8 +9,8 @@ public class BoardManager: MonoBehaviour {
     public int spacesLayer = 1 << 9; // Set LayerMask to Spaces Layer (9)
     public Vector2 mapSize = new Vector2(10, 10);
     public Spaces targetSpace;
-    public Spaces[,] spacePositions;
-    public Spaces[,] graph;
+    public Spaces[,] spacesGrid;
+    public Spaces[,] spacesGraph;
     public Pieces selectedUnit;
     public LevelManager lvlManager;
     public List<Spaces> movePath = null;
@@ -48,7 +48,7 @@ public class BoardManager: MonoBehaviour {
 
     public void GenerateBoard() {
 
-        spacePositions = new Spaces[(int)mapSize.x, (int)mapSize.y];
+        spacesGrid = new Spaces[(int)mapSize.x, (int)mapSize.y];
 
         for(int x=0; x<mapSize.x; x++) {
             for(int y=0; y<mapSize.y; y++) {
@@ -58,7 +58,7 @@ public class BoardManager: MonoBehaviour {
                 go.transform.SetParent(this.transform);
                 Spaces curSpace = go.gameObject.GetComponent<Spaces>();
                 curSpace.position = new Vector2(x, y);
-                spacePositions[x, y] = curSpace;
+                spacesGrid[x, y] = curSpace;
                
             }
         }
@@ -69,10 +69,10 @@ public class BoardManager: MonoBehaviour {
         for (int x = 0; x < mapSize.x; x++) {
             for (int y = 0; y < mapSize.y; y++) {
 
-                if (x > 0) { spacePositions[x, y].edges.Add(spacePositions[x - 1, y]); }
-                if (x < mapSize.x-1) { spacePositions[x, y].edges.Add(spacePositions[x + 1, y]); }
-                if (y > 0) { spacePositions[x, y].edges.Add(spacePositions[x, y-1]); }
-                if (y < mapSize.x - 1) { spacePositions[x, y].edges.Add(spacePositions[x, y+1]); }
+                if (x > 0) { spacesGrid[x, y].edges.Add(spacesGrid[x - 1, y]); }
+                if (x < mapSize.x-1) { spacesGrid[x, y].edges.Add(spacesGrid[x + 1, y]); }
+                if (y > 0) { spacesGrid[x, y].edges.Add(spacesGrid[x, y-1]); }
+                if (y < mapSize.x - 1) { spacesGrid[x, y].edges.Add(spacesGrid[x, y+1]); }
 
             }
         }
@@ -80,7 +80,7 @@ public class BoardManager: MonoBehaviour {
     }
 
     public void UnHighlightAllPieces() {
-        foreach(Spaces s in spacePositions) {
+        foreach(Spaces s in spacesGrid) {
             s.ResetSpaces();
         }
     }
@@ -106,14 +106,14 @@ public class BoardManager: MonoBehaviour {
         List<Spaces> unvisited = new List<Spaces>();
 
         Spaces source = selectedUnit.currentSpace;
-        Spaces target = spacePositions[x, y];
+        Spaces target = spacesGrid[x, y];
         
 
         dist[source] = 0;
         prev[source] = null;
 
         // Step 1 - Create a set of all nodes and mark them as unvisited and set the origin position to a dist cost of 0
-        foreach(Spaces v in spacePositions) {
+        foreach(Spaces v in spacesGrid) {
             if (v != source) {
                 dist[v] = Mathf.Infinity;
                 prev[v] = null;
@@ -165,7 +165,7 @@ public class BoardManager: MonoBehaviour {
 
     public Spaces GetSpaceAtLocation(Vector2 pos) {
         if (pos.x > -1 & pos.x < mapSize.x & pos.y > -1 & pos.y < mapSize.y) {
-            return spacePositions[(int)pos.x, (int)pos.y];
+            return spacesGrid[(int)pos.x, (int)pos.y];
         }
         Debug.LogWarning("No Space Detected at:" + pos);
         return null;
