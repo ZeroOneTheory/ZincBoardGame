@@ -53,4 +53,8 @@ public class Spaces : MonoBehaviour {
         return new Vector3(position.x, .5f, position.y);
     }
 
+    public Vector2 GetPositionOnGrid() {
+        return position;
+    }
+
 }

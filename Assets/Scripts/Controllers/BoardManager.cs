@@ -189,10 +189,15 @@ public class BoardManager: MonoBehaviour {
         return null;
     }
 
-    public bool CheckForValidSpace(Vector2 pos) {
+    public bool CheckForValidSpaceAtPosition(Vector2 pos) {
         if (pos.x > -1 & pos.x < mapSize.x & pos.y > -1 & pos.y < mapSize.y) {
             return true;
         }
         return false;
+    }
+
+    public bool CheckForWalkableSpace(Spaces space) {
+        // Check the cost and walkability of the space based on moves and turn data
+        return true;
     }
 }

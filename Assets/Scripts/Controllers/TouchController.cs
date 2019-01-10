@@ -5,14 +5,14 @@ using UnityEngine;
 public class TouchController : MonoBehaviour {
 
     public float swipeDeadZone=200;
-    public float swipeDeadZone3D = 5;
+    public float swipeDeadZone3D = 3;
     public float testMag;
     public int touchLayer = 1 << 11;
     public Ray touchRay;
     public RaycastHit touchRayHitInfo;
 
-    public Vector2 startTouchPoint, swipeDelta, currTouchPoint;
-    public Vector3 startTouchPoint3, swipeDelta3, currTouchPoint3;
+    public Vector2 startTouchPoint, agentPos, swipeDelta, currTouchPoint;
+    public Vector3 startTouchPoint3, agentPos3, swipeDelta3, currTouchPoint3;
     public bool tLeft, tRight, tUp, tDown;
     public bool isDragging = false;
 
@@ -42,21 +42,11 @@ public class TouchController : MonoBehaviour {
             if (Input.touchCount > 0) {
                 swipeDelta = Input.touches[0].position - startTouchPoint;
                 swipeDelta3 = currTouchPoint3 - startTouchPoint3;
+                Debug.DrawLine(startTouchPoint3, currTouchPoint3, Color.green);
             }
         }
 
-        //if (swipeDelta.magnitude > swipeDeadZone) {
-        //    SetSwipeDirection();
-        //} else {
-        //    tLeft = tRight = tUp = tDown = false;
-        //}
-        testMag = swipeDelta3.magnitude;
-        if (swipeDelta3.magnitude > swipeDeadZone3D) {
-            SetSwipeDirection3D();
-        }
-        else {
-            tLeft = tRight = tUp = tDown = false;
-        }
+        CheckDeadzone3D();
 
 
 
@@ -97,34 +87,11 @@ public class TouchController : MonoBehaviour {
 
     }
 
-    public void SetSwipeDirection3D() {
-        float x = swipeDelta3.x;
-        float y = swipeDelta3.z;
-
-        if (Mathf.Abs(x) > Mathf.Abs(y)) {
-            //Left or Right
-            if (x < 0) {
-                //Left
-                if (!CheckForSetDir()) { tLeft = true; }
-            }
-            else {
-                //Right
-                if (!CheckForSetDir()) { tRight = true; }
-            }
+    public bool CheckDeadzone3D() {
+        if (swipeDelta3.magnitude > swipeDeadZone3D) {
+            return true;
         }
-        else {
-            //Up and Down
-            if (y < 0) {
-                //Down
-                if (!CheckForSetDir()) { tDown = true; }
-            }
-            else {
-                //Up
-                if (!CheckForSetDir()) { tUp = true; }
-            }
-        }
-
-
+        return false;
     }
 
     public bool CheckForSetDir() {
